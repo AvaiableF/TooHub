@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    padding: 20px;
+    background-color: black;
+    color: white;
+}
+
+.container {
+    color: black;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+textarea, input {
+    color: black;
+}
+
+textarea {
+    height: 150px;
+}
+
+ /* Footer Styles */
+ .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #000;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    opacity: 0.8;
+    z-index: 9999;
+  }
+  
+  #version {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  #version-number {
+    font-weight: bold;
+    color: #4CAF50;
+  }

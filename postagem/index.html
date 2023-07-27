@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Embed Generator</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body class="bg-dark text-white">
+
+    
+    <div class="container mt-5">
+
+        
+        <div class="row justify-content-center">
+
+            
+            <div class="col-8">
+
+                <input type="text" id="videoTitle" class="form-control" placeholder="Insira o título do vídeo">
+                
+                
+                <textarea id="videoDescription" class="form-control mt-3" placeholder="Insira a descrição"></textarea>
+
+                <input type="text" id="videoUrl" class="form-control mt-3" placeholder="Insira a URL do vídeo">
+                <button class="btn btn-primary mt-3" onclick="generateCode()">Gerar código</button>
+                <button class="btn btn-primary mt-3" onclick="generateTitle()">Copiar Título</button>
+                <button class="btn btn-primary mt-3"  onclick="voltarPagina()">Voltar a tela inicial</button>
+
+
+                <textarea id="result" class="form-control mt-3"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div id="version" class="version">Versión: <span id="version-number"></span></div>
+        <p id="derechos" class="footer-text">© 2023 Elogios para o Canal. Todos os Dereitos Reservados.</p>
+    </footer>
+    
+    <script src="../version.js"></script>
+
+    <script src="app.js"></script>
+</body>
+</html>

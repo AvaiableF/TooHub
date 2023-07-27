@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tradutor Simples</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tradutor Simples</h1>
+        <input id="textToTranslate" type="text" placeholder="Texto para traduzir" />
+        <br/>
+        <button onclick="translateText()">Traduzir</button>
+        <h2 id="translatedText"></h2>
+    </div>
+
+    <script>
+        function translateText() {
+            var text = document.getElementById('textToTranslate').value;
+            var url = 'http://localhost:3000/translate';
+            var data = {
+                'text': text,
+                'source': 'pt',
+                'target': 'en',
+            };
+
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('translatedText').innerText = data.translatedText;
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SRT Time Adjuster</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles2.css">
+  
+</head>
+<body>
+  <div class="container mt-5" >
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <h1 class=" text-primary text-center mb-4" >SRT Time Adjuster</h1>
+        <div class="card">
+          <div class="card-body">
+            <input type="file" id="inputFile" accept=".srt" class="form-control-file mb-3">
+            <button onclick="processFile()" class="btn btn-primary">Process File</button>
+            <a download="output.srt" id="downloadLink" class="btn btn-success mt-3" style="display: none">Download new .srt</a>
+          </div>
+
+          <footer>
+            <a href="../index.html" class="back-button">Volver a la pantalla de inicio</a>
+        </footer>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div id="version" class="version">Versión: <span id="version-number"></span></div>
+    <p id="derechos" class="footer-text">© 2023 Elogios para o Canal. Todos os Dereitos Reservados.</p>
+</footer>
+
+  <script src="../version.js"></script>
+
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" href="../icon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <title>Elogios para el Canal</title>
+    <meta name="description" content="Elogios para o Canal - Deixe uma mensagem positiva para o canal.">
+    <meta name="author" content="AvaiableF">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Meta tag para tornar o site responsivo -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../global/styleGlobal.css">
+</head>
+<body class="transition-animation">
+
+    <main class="main-content">
+        <div class="app-container">
+            <div class="content">
+                <h2 class="subtitle neon">Deje un Elogio para el Canal</h2>
+                <p id="phrase" class="phrase"></p>
+                <button id="generate-button" class="btn btn-primary">Generar Frase</button>
+                <p id="counter" class="counter"></p>
+                
+                <div class="recent-phrases">
+                    <h2 class="subtitle">Últimas 3 Frases Generadas:</h2>
+                    <ul id="recent-list" class="recent-list"></ul>
+                </div>
+
+                <footer class="footer">
+                    <a href="../index.html" class="back-button">Volver a la pantalla de inicio</a>
+                </footer>
+                
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div id="version" class="version">Versión: <span id="version-number"></span></div>
+        <p id="derechos" class="footer-text">© 2023 Elogios para el Canal. Todos los Derechos Reservados.</p>
+    </footer>
+    <script src="../global/ArrayGlobal.js"></script>
+    <script src="script_es.js"></script>
+</body>
+</html>
+

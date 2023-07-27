@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="icon" href="icon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <title>Minha voltarPagina</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <link rel="stylesheet" href="elogios/style.css">
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .slider {
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            height: 200px;
+        }
+
+        .slider div {
+            flex: 0 0 auto;
+            margin-right: 20px;
+            padding: 10px;
+            width: 200px;
+            height: 180px;
+            background-color: #666;
+            text-align: center;
+        }
+
+        .slider div a {
+            color: #fff;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+            align-items: center;
+        }
+
+        .slider div a:hover {
+            transform: scale(1.2);
+        }
+
+        .slider div i {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container d-flex justify-content-center align-items-center vh-100">
+        <div class="slider">
+            <div><a href="elogios/index.html" ><i class="fas fa-home"></i>Elogios</a></div>
+            <div><a href="legendas/index2.html"><i class="fas fa-info"></i>Legendas</a></div>
+            <div><a href="postagem/index.html"><i class="fas fa-envelope"></i>Postagem</a></div>
+            <div><a href="agradecimento/index.html"><i class="fas fa-sitemap"></i>Agradecimentos</a></div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div id="version" class="version">Versión: <span id="version-number"></span></div>
+        <p id="derechos" class="footer-text">© 2023 Elogios para o Canal. Todos os Dereitos Reservados.</p>
+    </footer>
+    
+    <script src="version.js"></script>
+</body>
+
+</html>
