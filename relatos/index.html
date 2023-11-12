@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <link rel="icon" href="../icon.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteador de Frases de Agradecimento</title>
+    <!-- Adicionar Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #333;
+            /* Cor de fundo do tema dark */
+            color: #fff;
+            /* Cor de texto do tema dark */
+        }
+
+        .frase-container {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            /* Cor de fundo azul para botão primário */
+            border-color: #007bff;
+            /* Cor da borda do botão primário */
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            /* Cor de fundo azul mais escura ao passar o mouse sobre o botão primário */
+            border-color: #0056b3;
+            /* Cor da borda mais escura ao passar o mouse sobre o botão primário */
+        }
+
+        /* Footer Styles */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #000;
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+            opacity: 0.8;
+            z-index: 9999;
+        }
+
+        #version {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #version-number {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .back-button {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            color: #fff;
+            text-decoration: none;
+            background-color: #007bff;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="mt-4">Sorteador Relato de Inscrito</h1>
+
+    <div class="frase-container">
+        <p id="frase-agradecimento"></p>
+        <button class="btn btn-primary" onclick="sortearFrase()">Sortear</button>
+        <p id="quantidade-disponivel" class="mt-3"></p>
+
+        <footer>
+            <a href="../index.html" class="back-button">VOLTAR A TELA DE INICIO</a>
+        </footer>
+    </div>
+
+    <div id="ultimos-agradecimentos">
+        <h3 class="mt-4">Últimos 3 Relatos Gerados:</h3>
+        <ul id="lista-ultimos-agradecimentos"></ul>
+
+
+    </div>
+
+    <footer class="footer">
+        <div id="version" class="version">Versión: <span id="version-number"></span></div>
+        <p id="derechos" class="footer-text">© 2023 Elogios para o Canal. Todos os Dereitos Reservados.</p>
+    </footer>
+
+    <script src="../version.js"></script>
+
+    <!-- Adicionar Bootstrap JS e jQuery com versões mais recentes -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        // Array de frases de agradecimento con emojis en español
+        const frasesRelatos = [
+            "¡Buenos días desde México! Desde que comencé a ver tus videos, mi confianza ha mejorado notablemente. Ahora me siento más seguro en mis relaciones y en mi vida cotidiana. ¡Gracias por todo!",
+
+            "¡Hola! Escribo desde Argentina. Quiero agradecerte por los consejos que das en tus videos. Me han ayudado a entenderme mejor y a mejorar mis interacciones con las personas.",
+
+            "¡Buenas tardes desde Colombia! Gracias a tu contenido, he aprendido a valorarme más y a establecer límites saludables en mis relaciones. ¡Sigue así!",
+
+            "Desde España, ¡buenos días! Tus videos me han ayudado a superar una ruptura dolorosa y a ver las cosas desde una perspectiva más positiva. ¡Gracias!",
+
+            "¡Buenas noches desde Chile! Quiero agradecerte por ayudarme a encontrar mi propósito y dirección en la vida a través de tus videos.",
+
+            "¡Hola! Escribo desde Venezuela. Tus consejos sobre desarrollo personal me han ayudado a enfrentar desafíos en mi vida con valentía y determinación.",
+
+            "¡Buenos días desde Perú! Gracias a tu contenido, he aprendido a comunicarme mejor y a expresar mis sentimientos de una manera más efectiva.",
+            "Desde Bolivia, ¡buenas tardes! Tus videos me han inspirado a perseguir mis pasiones y a creer en mí mismo.",
+
+            "¡Hola! Escribo desde Ecuador. Gracias a tu guía y consejos, he mejorado mis habilidades de comunicación y ahora tengo relaciones más saludables.",
+
+            "Desde Uruguay, ¡buenas noches! Tu contenido me ha dado la confianza para enfrentar mis miedos y superar obstáculos en mi vida.",
+
+            "¡Buenos días desde Guatemala! Gracias a tus videos, he aprendido a valorar y amar quien soy. Me has inspirado a ser la mejor versión de mí mismo.",
+
+            "Desde Honduras, ¡hola! Quiero agradecerte por ayudarme a encontrar claridad y dirección en mi vida a través de tus enseñanzas.",
+
+            "¡Buenas tardes desde El Salvador! Tus videos han sido una fuente constante de inspiración y motivación para mí. ¡Gracias por todo!",
+
+            "Desde Nicaragua, ¡buenos días! Gracias a tu contenido, he aprendido a ser más asertivo y a establecer límites en mis relaciones.",
+
+            "¡Hola! Escribo desde Costa Rica. Tus consejos y guía me han ayudado a superar desafíos personales y a crecer como individuo.",
+
+            "Desde Panamá, ¡buenas noches! Quiero agradecerte por todo el conocimiento y sabiduría que compartes en tus videos. Ha sido transformador para mí.",
+
+            "¡Buenos días desde Paraguay! Gracias a tus enseñanzas, he aprendido a valorar más mis relaciones y a conectar de forma más profunda con las personas.",
+
+            "Desde Puerto Rico, ¡hola! Tus videos me han inspirado a perseguir mis sueños y a creer en mis capacidades. ¡Gracias por todo!",
+
+            "¡Buenas tardes desde la República Dominicana! Gracias a tu contenido, he aprendido a enfrentar mis inseguridades y a construir confianza en mí mismo.",
+
+            "Desde Cuba, ¡buenos días! Quiero agradecerte por ayudarme a entenderme mejor y a desarrollar habilidades que han mejorado mi vida en muchos aspectos.",
+
+            "¡Buenos días desde España! Antes de encontrar tu canal, me sentía perdido en muchos aspectos de mi vida. Con cada video que veo, siento que descubro una nueva perspectiva o herramienta que me ayuda a mejorar. Ahora, he mejorado mis relaciones y mi autoestima. ¡Gracias por ser esa luz en el camino!",
+
+            "Desde México, ¡hola! Quiero contarte que gracias a tus videos he logrado superar una etapa muy difícil en mi vida. Tus palabras y consejos han sido mi refugio y guía en momentos oscuros, y me han enseñado a valorarme y a confiar más en mí mismo.",
+
+            "¡Buenas tardes desde Argentina! Nunca pensé que un canal de YouTube podría impactar tanto en mi vida. Con cada consejo y enseñanza que compartes, siento que crezco un poco más como persona. He aplicado tus técnicas y he visto cambios reales en mi vida diaria.",
+
+            "Desde Chile, ¡buenos días! Tus videos han sido una revelación para mí. Me has ayudado a entender mis emociones, a manejar mis relaciones y, lo más importante, a amarme a mí mismo. ¡Gracias por todo lo que haces!",
+
+            "¡Hola desde Colombia! Hace unos meses, atravesaba un período de mucha confusión y baja autoestima. Descubrir tu canal ha sido una bendición. Cada video es como una sesión de terapia y me ha ayudado a encontrar claridad en mi vida.",
+
+            "Desde Venezuela, ¡buenas noches! Quiero agradecerte profundamente por tu dedicación y por compartir tanto conocimiento valioso. He aplicado muchas de tus técnicas y consejos en mi vida, y he visto transformaciones increíbles en mis relaciones y en mi autoimagen.",
+
+            "¡Buenos días desde Perú! Gracias a ti, he aprendido a enfrentar mis miedos, a comunicarme mejor y a establecer límites saludables en mis relaciones. Tus videos son una fuente constante de inspiración y motivación para mí.",
+
+            "Desde Bolivia, ¡hola! Antes de conocer tu canal, sentía que estaba atrapado en un ciclo de negatividad y dudas. Pero tus enseñanzas me han mostrado un camino hacia una vida más plena y significativa.",
+
+            "¡Buenas tardes desde Ecuador! Quiero agradecerte por ser una voz de sabiduría en un mundo tan ruidoso. Tus videos no solo me han enseñado habilidades valiosas, sino que también me han inspirado a ser una mejor versión de mí mismo.",
+
+            "Desde Paraguay, ¡buenos días! Gracias a tu contenido, he redescubierto la confianza en mí mismo y he aprendido a valorar las pequeñas cosas de la vida. Cada video tuyo es una joya de sabiduría que me ayuda a navegar los desafíos diarios.",
+
+            "¡Hola desde Guatemala! Es increíble cómo tus videos han tocado tantos aspectos de mi vida. Desde mejorar mis habilidades de comunicación hasta aprender a apreciar y cuidar de mí mismo, realmente has sido una influencia positiva en mi vida.",
+
+            "Desde Honduras, ¡buenas noches! Quiero agradecerte por compartir tus experiencias y conocimientos. Me has enseñado a enfrentar mis inseguridades y a construir una vida llena de propósito y significado.",
+
+            "¡Buenos días desde El Salvador! Nunca me canso de ver tus videos. Cada uno me ofrece una nueva perspectiva o herramienta que puedo aplicar en mi vida. Gracias a ti, me siento más empoderado y confiado en mis decisiones.",
+
+            "Desde Nicaragua, ¡hola! Descubrir tu canal ha sido una de las mejores cosas que me ha pasado. Me has dado herramientas y consejos que han transformado mi vida en muchas maneras. ¡Sigue haciendo este increíble trabajo!",
+
+            "¡Buenas tardes desde Costa Rica! Quiero agradecerte por ser una fuente constante de inspiración y motivación. Tus videos han sido fundamentales en mi proceso de autoconocimiento y crecimiento personal.",
+
+            "Desde Panamá, ¡buenos días! Gracias a tu contenido, he aprendido a ver la vida desde una perspectiva más positiva y a enfrentar desafíos con una mentalidad más fuerte y resiliente.",
+
+            "¡Hola desde Puerto Rico! Quiero agradecerte por todo el amor y dedicación que pones en tus videos. Me han ayudado a comprender mejor mis emociones y a construir relaciones más saludables y significativas.",
+
+            "Desde la República Dominicana, ¡buenas noches! Gracias a tus enseñanzas, he logrado superar muchos obstáculos en mi vida y he aprendido a valorar y amar a la persona que soy.",
+
+            "¡Buenos días desde Cuba! Quiero agradecerte por iluminar mi camino con tus palabras sabias y consejos prácticos. Gracias a ti, he logrado establecer metas claras y trabajar hacia ellas con determinación y confianza.",
+
+            "Desde Uruguay, ¡hola! Tus videos han sido un faro de esperanza y guía en mi vida. Me has enseñado a creer en mí mismo y a perseguir mis sueños con pasión y determinación.",
+
+            "¡Buenos días! Desde que descubrí tu canal, mi vida ha cambiado drásticamente. En tus palabras encontré el consuelo y la guía que necesitaba en un momento muy oscuro de mi vida. Gracias por ser esa luz en mi camino.",
+
+            "¡Hola! Tus videos me han tocado profundamente. Gracias a ti, he aprendido a amarme a mí mismo, a perdonar mis errores pasados y a ver el futuro con esperanza y optimismo.",
+
+            "¡Buenas tardes! Cada vez que veo uno de tus videos, siento una conexión profunda con tus palabras. Me has enseñado a valorar las pequeñas cosas y a encontrar alegría en los momentos más simples.",
+
+            "¡Hola! Nunca pensé que un canal de YouTube pudiera tener un impacto tan profundo en mi vida. Tus palabras han sido un bálsamo para mi alma herida y me han dado la fuerza para seguir adelante.",
+
+            "¡Buenos días! Gracias a ti, he redescubierto la belleza de la vida. Tus enseñanzas me han ayudado a superar mis inseguridades y a abrazar cada día con pasión y gratitud.",
+
+            "¡Hola! Cada video tuyo es como una carta escrita directamente para mí. Me has ayudado a sanar viejas heridas y a mirar el futuro con nuevos ojos.",
+
+            "¡Buenas tardes! Quiero agradecerte desde lo más profundo de mi corazón. Tus palabras han sido un faro en mi vida, guiándome a través de tormentas y llevándome a aguas más tranquilas.",
+
+            "¡Hola! Descubrir tu canal ha sido uno de los regalos más grandes de mi vida. Me has enseñado a creer en la magia de los nuevos comienzos y en la belleza de cada momento.",
+
+            "¡Buenos días! Gracias a ti, he aprendido a abrazar mis imperfecciones y a verlas como parte de mi singularidad. Tu canal ha sido una fuente constante de inspiración y amor.",
+            "¡Hola! Tus palabras han tocado mi alma de una manera que nunca imaginé. Me has dado la confianza para enfrentar mis miedos y perseguir mis sueños con todo mi corazón.",
+
+            "¡Buenas tardes! Quiero agradecerte por ser esa voz suave y reconfortante que necesitaba. Me has enseñado a encontrar la belleza en mi viaje y a apreciar cada paso del camino.",
+
+            "¡Hola! Gracias a tus enseñanzas, he encontrado la paz interior que siempre busqué. Tu canal ha sido un santuario para mí, un lugar donde puedo encontrar consuelo y guía.",
+
+            "¡Buenos días! Nunca me canso de agradecerte por todo lo que has hecho por mí. Me has enseñado a ver la vida con nuevos ojos y a abrazar cada día con esperanza y amor.",
+
+            "¡Hola! Tus palabras han sido un recordatorio constante de que soy suficiente, de que soy amado y de que merezco todo lo bueno que la vida tiene para ofrecer.",
+
+            "¡Buenas tardes! Gracias a ti, he aprendido a amar cada parte de mí y a celebrar cada pequeño logro. Tu canal ha sido un regalo inestimable en mi vida.",
+
+            "¡Hola! Cada vez que me siento perdido o abrumado, recurro a tus videos. Me has dado la esperanza y la fuerza que necesitaba para seguir adelante.",
+
+            "¡Buenos días! Quiero agradecerte por ser esa chispa que encendió la pasión y el propósito en mi vida. Gracias a ti, he encontrado mi camino y mi voz.",
+
+            "¡Hola! Tus enseñanzas han sido un recordatorio constante de que siempre hay esperanza, incluso en los momentos más oscuros. Gracias por ser esa luz en mi vida.",
+
+            "¡Buenas tardes! Gracias a ti, he aprendido a abrazar el presente y a vivir cada momento al máximo. Tu canal ha sido una fuente inagotable de inspiración y alegría para mí.",
+
+            "¡Hola! Quiero agradecerte por ser ese faro en la tormenta, esa voz suave que me recuerda que todo estará bien. Gracias a ti, he encontrado la paz y el propósito en mi vida.",
+
+        ];
+
+        let relatosSorteados = [];
+        let ultimosRelatos = [];
+        let relatosSelecionados = "";
+
+        function sortearFrase() {
+            if (relatosSorteados.length === 0) {
+                // Se todas las frases ya fueron sorteadas, reiniciar el array de frases sorteadas
+                relatosSorteados = frasesRelatos.slice();
+            }
+
+            // Escoger una frase aleatoria entre las no sorteadas aún
+            const indiceSorteado = Math.floor(Math.random() * relatosSorteados.length);
+            relatosSelecionados = relatosSorteados[indiceSorteado];
+
+            // Remover la frase sorteada de la lista de frases no sorteadas
+            relatosSorteados.splice(indiceSorteado, 1);
+
+            // Exibir la frase sorteada en el elemento con id "frase-agradecimento"
+            const fraseAgradecimentoElement = document.getElementById("frase-agradecimento");
+            fraseAgradecimentoElement.textContent = relatosSelecionados;
+
+            // Copiar la frase generada a la área de transferencia
+            copiarTextoAAreaTransferencia(relatosSelecionados);
+
+            // Atualizar la cantidad de Relatos disponiveis para sorteo
+            document.getElementById("quantidade-disponivel").textContent = `Relatos disponiveis: ${relatosSorteados.length}`;
+
+            // Atualizar la lista de últimos agradecimientos generados
+            ultimosRelatos.push(relatosSelecionados);
+            if (ultimosRelatos.length > 3) {
+                ultimosRelatos.shift(); // Remover el primer elemento si la lista tiene más de 3 elementos
+            }
+            atualizarListaultimosRelatos();
+        }
+
+        function copiarTextoAAreaTransferencia(texto) {
+            // Crear un elemento temporal para copiar el texto
+            const tempInput = document.createElement("input");
+            tempInput.style.position = "absolute";
+            tempInput.style.left = "-9999px";
+            tempInput.value = texto;
+            document.body.appendChild(tempInput);
+
+            // Seleccionar el contenido del input temporal
+            tempInput.select();
+            tempInput.setSelectionRange(0, 99999); // Para dispositivos móviles
+
+            // Copiar el texto seleccionado a la área de transferencia
+            document.execCommand("copy");
+
+            // Eliminar el input temporal
+            document.body.removeChild(tempInput);
+        }
+
+        function atualizarListaultimosRelatos() {
+            const listaultimosRelatos = document.getElementById("lista-ultimos-agradecimentos");
+            listaultimosRelatos.innerHTML = ""; // Limpiar la lista antes de actualizar
+
+            // Adicionar los últimos agradecimientos a la lista
+            for (let i = ultimosRelatos.length - 1; i >= 0; i--) {
+                const li = document.createElement("li");
+                li.textContent = ultimosRelatos[i];
+                listaultimosRelatos.appendChild(li);
+            }
+        }
+
+        // Exibir la cantidad inicial de Relatos disponiveis al cargar la página
+        document.getElementById("quantidade-disponivel").textContent = `Relatos disponiveis: ${frasesRelatos.length}`;
+    </script>
+</body>
+
+</html>
