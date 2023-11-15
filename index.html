@@ -51,7 +51,33 @@
             margin-bottom: 10px;
         }
     </style>
-</head>
+<style>
+.slider .col {
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background for each column */
+    border: 1px solid #27ae60; /* Green border to match the Matrix effect */
+    border-radius: 5px; /* Slight roundness to the borders */
+    margin: 10px;
+    transition: transform 0.3s ease, border 0.3s ease; /* Smooth transition for effects */
+}
+
+.slider .col:hover {
+    border: 1px solid #2ecc71; /* Brighter green border on hover */
+    transform: scale(1.1); /* Slightly scale up the column on hover */
+}
+
+.slider a {
+    color: #27ae60; /* Green text color to match the Matrix effect */
+    font-family: 'Courier New', monospace; /* Monospaced font for a digital look */
+    font-size: 1.2rem; /* Larger font size for readability */
+    text-shadow: 0 0 5px #27ae60; /* Slight glow effect */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.slider a:hover {
+    color: #2ecc71; /* Brighter green color on hover */
+    text-decoration: none; /* Remove the underline on hover */
+}
+</style></head>
 
 <body>
     <div class="container d-flex justify-content-center align-items-center vh-100">
@@ -73,6 +99,63 @@
     </footer>
     
     <script src="version.js"></script>
-</body>
+<script>
+// Create a canvas and append it to the body
+var c = document.createElement('canvas');
+var ctx = c.getContext('2d');
+document.body.insertBefore(c, document.body.firstChild);
+
+// Set the canvas to fixed positioning so it stays in the background
+c.style.position = 'fixed';
+c.style.top = '0';
+c.style.left = '0';
+c.style.zIndex = '-1'; // Ensuring the canvas is behind other elements
+
+// Making the canvas full screen
+c.height = window.innerHeight;
+c.width = window.innerWidth;
+
+// Characters used for the Matrix effect
+var matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}';
+
+matrixChars = matrixChars.split('');
+
+var fontSize = 14;
+var columns = c.width/fontSize; // Number of columns for the rain
+// An array of drops - one per column
+var drops = [];
+// X below is the x coordinate
+// 1 = y-coordinate of the drop(same for every drop initially)
+for(var x = 0; x < columns; x++)
+    drops[x] = 1; 
+
+// Drawing the characters
+function draw() {
+    // Black BG for the canvas
+    // Translucent BG to show trail
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+    ctx.fillRect(0, 0, c.width, c.height);
+
+    ctx.fillStyle = '#0F0'; // Green text
+    ctx.font = fontSize + 'px arial';
+    // Looping over drops
+    for(var i = 0; i < drops.length; i++) {
+        // A random matrix character to print
+        var text = matrixChars[Math.floor(Math.random()*matrixChars.length)];
+        // X = i*fontSize, Y = value of drops[i]*fontSize
+        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
+        
+        // Sending the drop back to the top randomly after it has crossed the screen
+        // Adding a randomness to the reset to make the drops scattered on the Y axis
+        if(drops[i]*fontSize > c.height && Math.random() > 0.975)
+            drops[i] = 0;
+
+        // Incrementing Y coordinate
+        drops[i]++;
+    }
+}
+
+setInterval(draw, 35);
+</script></body>
 
 </html>
